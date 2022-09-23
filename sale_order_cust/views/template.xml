@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_payment_inherit" inherit_id="website_sale.payment">
+        <xpath expr="//div[@id='payment_method']" position="before">
+             <h3 class="mb24">Distributor</h3>
+             <input value="default_dist" type="radio" name="distributor" class="form-check-input o_radio_input" checked="true">Default Distributor</input>
+             <br/>
+             <input value="dist" type="radio" name="distributor" class="form-check-input o_radio_input">Select Distributor</input>
+            <t t-set="field_name_val"
+               t-value="request.env['res.partner'].sudo().
+               search([('is_distributor','=','t')])"/>
+            <select class='detail needsclick' name='dist_partner_id'>
+                <option value=''>None</option>
+                <t t-foreach='field_name_val' t-as='val'>
+                    <option t-att-value='val.id'>
+                        <t t-esc='val.name'/>
+                    </option>
+                </t>
+            </select>
+        </xpath>
+    </template>
+</odoo>
